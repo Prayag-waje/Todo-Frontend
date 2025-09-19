@@ -8,7 +8,7 @@ function App(){
     const [todos,setTodos] = useState([]);
 
     const loadTodos = async() => {
-        const response = await axios.get("http://localhost:8080/todos");
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/todos`);
         setTodos(response.data.data);
         
     };
@@ -18,7 +18,7 @@ function App(){
     }, []);
 
     const deleteTodo = (id) => async () => {
-        const response = await axios.delete(`http://localhost:8080/todos/${id}`);
+        const response = await axios.delete(`${import.meta.env.VITE_API_URL}/todos/${id}`);
         if(response){
             alert(response.data.message);
             loadTodos();

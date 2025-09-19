@@ -13,7 +13,7 @@ function NewTodos() {
   const [emojiPicker, setEmojiPicker] = useState(false);
 
   const addTodo = () =>async () => {
-    const response = await axios.post("http://localhost:8080/todos",
+    const response = await axios.post(`${import.meta.env.VITE_API_URL}/todos`,
       tododata);
 
       if (response){
