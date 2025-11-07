@@ -1,38 +1,60 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react';
 import EmojiPicker from 'emoji-picker-react';
 import axios from 'axios';
+import { useParams } from 'react-router';
 
-function NewTodos() {
+function EditTodos() {
+
+  const { id } = useParams();
+
   const [tododata, setTododata] = useState({
-    TodoItem: "",
+    todoItem: "",
     priority: "low",
     Mood: "😊",
+    isDone: false,
   });
+
+  const editTodo = async () => {
+    const response = await axios.put(`${import.meta.env.VITE_API_URL}/todos/${id}`,
+      tododata);
+
+    if (response){
+      alert(response.data.message);
+
+      setTimeout(()=>{
+        window.location.href = "/";
+      }, 2000)
+    }
+  }
 
   const [emojiPicker, setEmojiPicker] = useState(false);
 
-  const addTodo = () =>async () => {
-    const response = await axios.post(`${import.meta.env.VITE_API_URL}/todos`,
-      tododata);
+  const loadTodo = async () => {
+    if(!id) return;
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/todos/${id}`);
 
-      if (response){
-        alert(response.data.message);
+    const tododetail = response.data.data;
 
-        setTimeout(()=>{
-          window.location.href = "/";
-        }, 2000)
-      }
-    }
+    setTododata({
+      todoItem: tododetail.todoItem,
+      priority: tododetail.priority,
+      Mood: tododetail.Mood,
+      isDone: tododetail.isDone,
+    });
+  }
 
+  useEffect(() => {
+    loadTodo();
+  }, [id]);
 
   return (
     <div >
       <div className='flex flex-col gap-2 w-150 border-2 px-2 py-4 my-6 mx-auto rounded-xl shadow-xl'>
-        <h1 className='text-3xl font-semibold'>New TODO</h1>
-        <input type="text" value={tododata.TodoItem}
+        <h1 className='text-3xl font-semibold'>Edit TODO : {id}</h1>
+        <input type="text" value={tododata.todoItem}
         className='border-2 border-gray-700 rounded-lg p-1 m-2'
-        onChange={(e) => setTododata({...tododata, TodoItem: e.target.value})}
+        onChange={(e) => {setTododata({...tododata, todoItem: e.target.value})}}
         />
 
         <select value={tododata.priority} 
@@ -54,8 +76,9 @@ function NewTodos() {
         </span>
 
         <button className='border-2 border-gray-700 bg-black text-zinc-50 rounded-lg p-1 m-2'
-          onClick={addTodo()}
-        >Add TODO</button>
+          onClick={editTodo}
+          alert={"Update TODO"}
+        >Update TODO</button>
       </div>
 
       
@@ -63,4 +86,4 @@ function NewTodos() {
   )
 }
 
-export default NewTodos
+export default EditTodos

@@ -1,5 +1,82 @@
 @import "tailwindcss";
 
 *{
-    font-family:sans-serif;
+        font-family: sans-serif;
+        box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 2rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: #f8fafc;
+    color: #111827;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body > #root,
+body > div {
+    width: 100%;
+    max-width: 900px;
+}
+
+.w-150 {
+    width: 600px;
+    max-width: 100%;
+}
+
+.border-1 {
+    border-width: 1px;
+}
+
+.box-shadow-2xl {
+    box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+}
+
+.right-45 { right: 6rem; }
+.right-25 { right: 3.5rem; }
+
+h1 {
+    text-align: center;
+    font-size: 1.75rem;
+    margin: 1rem 0;
+    font-weight: 700;
+}
+
+.todo-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    position: relative;
+}
+
+.todo-item .priority-badge,
+span.bg-gray-900.text-zinc-100 {
+    font-size: 0.75rem;
+    padding: 0.15rem 0.5rem;
+    line-height: 1;
+}
+
+a.fixed {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+}
+
+@media (max-width: 640px) {
+    .w-150 { width: 100%; padding: 0 0.5rem; }
+    .right-45 { right: 4rem; }
+    .right-25 { right: 2.25rem; }
+    body { padding: 1rem; }
 }
